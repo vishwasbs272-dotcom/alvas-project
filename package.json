@@ -1,6 +1,7 @@
 {
   "name": "stratum-civic-ai",
   "version": "1.0.0",
+  "type": "module",
   "description": "STRATUM.AI - Explainable Civic Triage, Spatial Deduplication, and Infrastructure Action-Brief Platform",
   "private": true,
   "scripts": {
