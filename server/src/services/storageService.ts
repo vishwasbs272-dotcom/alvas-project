@@ -1,5 +1,6 @@
 import fs from 'fs';
 import path from 'path';
+import os from 'os';
 import crypto from 'crypto';
 import { fileURLToPath } from 'url';
 import { getSupabase } from '../config/supabase.js';
@@ -19,7 +20,9 @@ const __dirname = path.dirname(__filename);
 const RUNTIME_STORE_DIR = __dirname.includes('dist')
   ? path.resolve(__dirname, '../../src/data')
   : path.resolve(__dirname, '../data');
-const RUNTIME_STORE_PATH = path.resolve(RUNTIME_STORE_DIR, 'runtimeStore.json');
+const RUNTIME_STORE_PATH = process.env.VERCEL === '1'
+  ? (process.platform === 'win32' ? path.resolve(os.tmpdir(), 'runtimeStore.json') : '/tmp/runtimeStore.json')
+  : path.resolve(RUNTIME_STORE_DIR, 'runtimeStore.json');
 
 interface RuntimeStoreSchema {
   clusters: SyntheticCluster[];

@@ -23,9 +23,10 @@ app.use(express.urlencoded({ extended: true, limit: '5mb' }));
 
 // Mount API routes
 app.use('/api', apiRouter);
+app.use('/', apiRouter);
 
 // Root fallback / ping
-app.get('/', (_req, res) => {
+app.get('/ping', (_req, res) => {
   res.json({
     app: 'STRATUM.AI Core API',
     status: 'ONLINE',
@@ -33,8 +34,9 @@ app.get('/', (_req, res) => {
   });
 });
 
-app.listen(PORT, '0.0.0.0', () => {
-  console.log(`
+if (process.env.VERCEL !== '1') {
+  app.listen(PORT, '0.0.0.0', () => {
+    console.log(`
   ==============================================================
    STRATUM.AI - Explainable Civic Triage & Spatial Intelligence
   ==============================================================
@@ -43,4 +45,7 @@ app.listen(PORT, '0.0.0.0', () => {
    Health Check   : http://localhost:${PORT}/api/health
   ==============================================================
   `);
-});
+  });
+}
+
+export default app;
